@@ -3,24 +3,24 @@ import React from "react";
 function  Categories({ value, onCahngeCategory }) {
 
   const categories = [
-    "Все",
-    "Мясные",
-    "Вегетарианская",
-    "Гриль",
-    "Острые",
-    "Закрытые",
+    { id: 0, name: "Все" },
+    { id: 1, name: "Мясные" },
+    { id: 2, name: "Вегетарианская" },
+    { id: 3, name: "Гриль" },
+    { id: 4, name: "Острые" },
+    { id: 5, name: "Закрытые" },
   ];
 
   return (
     <div className="categories">
       <ul>
-        {categories.map((categoryName, index) => (
+        {categories.map((category) => (
           <li
-            key={`${index}_${categoryName}`}
-            onClick={() => onCahngeCategory(index)}
-            className={value === index ? "active" : ""}
+            key={category.id}
+            onClick={() => onCahngeCategory(category)}
+            className={value.id === category.id ? "active" : ""}
           >
-            {categoryName}
+            {category.name}
           </li>
         ))}
       </ul>

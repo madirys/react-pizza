@@ -8,7 +8,7 @@ import Skeleton from "../components/PizzaBlock/Skeleton";
 const Home = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [items, setItems] = React.useState([]);
-  const [categoryId, setCategoryId] = React.useState(0);
+  const [category, setCategory] = React.useState({ id: 0, name: "Все" });
   const [sortType, setSortType] = React.useState({
     name: "популярности",
     sortProperty: "rating",
@@ -19,7 +19,7 @@ const Home = () => {
     setIsLoading(true);
     fetch(
       `https://628e18f4368687f3e7104a3b.mockapi.io/items?${
-        categoryId > 0 ? `category=${categoryId}&` : ""
+        category.id > 0 ? `category=${category.id}&` : ""
       }sortBy=${sortType.sortProperty}&order=${orderBy}`
     )
       .then((response) => {
@@ -30,14 +30,14 @@ const Home = () => {
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [categoryId, sortType, orderBy]);
+  }, [category, sortType, orderBy]);
 
   return (
     <div className="container">
       <div className="content__top">
         <Categories
-          value={categoryId}
-          onCahngeCategory={(id) => setCategoryId(id)}
+          value={category}
+          onCahngeCategory={(category) => setCategory(category)}
         />
         <Sort
           value={sortType}
@@ -46,7 +46,7 @@ const Home = () => {
           setOrderBy={(order) => setOrderBy(order)}
         />
       </div>
-      <h2 className="content__title">Все пиццы</h2>
+      <h2 className="content__title">{category.name}</h2>
       <div className="content__items">
         {isLoading
           ? [...Array(12)].map((_, index) => <Skeleton key={index} />)
