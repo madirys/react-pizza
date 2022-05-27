@@ -132,7 +132,7 @@ const Cart = () => {
             </div>
           </div>
           <div class="cart__item-price">
-            <b>770 ₽</b>
+            <b>770 ₸</b>
           </div>
           <div class="cart__item-remove">
             <div class="button button--outline button--circle">
@@ -207,7 +207,7 @@ const Cart = () => {
             </div>
           </div>
           <div class="cart__item-price">
-            <b>770 ₽</b>
+            <b>770 ₸</b>
           </div>
           <div class="cart__item-remove">
             <div class="button button--outline button--circle">
@@ -282,7 +282,7 @@ const Cart = () => {
             </div>
           </div>
           <div class="cart__item-price">
-            <b>770 ₽</b>
+            <b>770 ₸</b>
           </div>
           <div class="cart__item-remove">
             <div class="button button--outline button--circle">
@@ -357,7 +357,7 @@ const Cart = () => {
             </div>
           </div>
           <div class="cart__item-price">
-            <b>770 ₽</b>
+            <b>770 ₸</b>
           </div>
           <div class="cart__item-remove">
             <div class="button button--outline button--circle">
@@ -389,7 +389,7 @@ const Cart = () => {
           </span>
           <span>
             {" "}
-            Сумма заказа: <b>900 ₽</b>{" "}
+            Сумма заказа: <b>900 ₸</b>{" "}
           </span>
         </div>
         <div class="cart__bottom-buttons">
