@@ -11,11 +11,9 @@ const Search = () => {
   const inputRef = React.useRef();
 
   // return memorized callback function to avoid unnecessary rerenders
-  const updateSearchValue = React.useCallback(
-    debounce((str) => {
-      dispatch(setSearch(str))
-    }, 250),
-    []
+  const updateSearchValue = React.useMemo(
+    () => debounce(value => dispatch(setSearch(value)), 250),
+    [dispatch]
   );
 
   const onChangeInput = (e) => {
@@ -25,9 +23,8 @@ const Search = () => {
 
   const onClickClear = () => {
     dispatch(setSearch(""))
-    // setSearchValue("");
     setValue("");
-    // Firefox doesn't focus without setTimeout
+    // Fix for Firefox
     setTimeout(() => {
       inputRef.current.focus();
     }, 1);
