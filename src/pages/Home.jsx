@@ -11,17 +11,12 @@ import { setCategory } from "../redux/slices/filterSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const {category, sort, order} = useSelector((state) => state.filter);
 
-  const category = useSelector((state) => state.filter.category);
   const {searchValue } = React.useContext(SearchContext);
   const [isLoading, setIsLoading] = React.useState(true);
   const [items, setItems] = React.useState([]);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [orderBy, setOrderBy] = React.useState("asc");
-  const [sortType, setSortType] = React.useState({
-    name: "популярности",
-    sortProperty: "rating",
-  });
 
   const onCahngeCategory = (category) => {
     dispatch(setCategory(category));
@@ -32,7 +27,7 @@ const Home = () => {
     fetch(
       `https://628e18f4368687f3e7104a3b.mockapi.io/items?page=${currentPage}&limit=4&${
         category.id > 0 ? `category=${category.id}&` : ""
-      }sortBy=${sortType.sortProperty}&order=${orderBy}${
+      }sortBy=${sort.sortProperty}&order=${order}${
         searchValue ? `&name=${searchValue}` : ""
       }`
     )
@@ -44,7 +39,7 @@ const Home = () => {
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [category, sortType, orderBy, searchValue, currentPage]);
+  }, [category, sort, order, searchValue, currentPage]);
 
   const pizzas = items
     .map((item) => <PizzaBlock key={item.id} {...item} />);
@@ -57,12 +52,7 @@ const Home = () => {
           value={category}
           onCahngeCategory={onCahngeCategory}
         />
-        <Sort
-          value={sortType}
-          onChangeSort={(id) => setSortType(id)}
-          orderBy={orderBy}
-          setOrderBy={(order) => setOrderBy(order)}
-        />
+        <Sort />
       </div>
       <h2 className="content__title">{category.name}</h2>
       <div className="content__items">{isLoading ? skeletons : pizzas}</div>

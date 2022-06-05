@@ -1,12 +1,20 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setSort, setOrder } from "../redux/slices/filterSlice";
 
-function Sort({ value, onChangeSort, orderBy, setOrderBy }) {
+function Sort() {
+  const dispatch = useDispatch();
+  const {sort, order} = useSelector((state) => state.filter);
+
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const onChangeOrderBy = () => {
-    const order = orderBy === "asc" ? "desc" : "asc";
-    setOrderBy(order);
-    console.log(orderBy);
+  const onChangeSort = (item) => {
+    dispatch(setSort(item));
+  }
+
+  const onChangeOrder = () => {
+    const direction = order === "asc" ? "desc" : "asc";
+    dispatch(setOrder(direction));
   };
 
   const list = [
@@ -18,7 +26,7 @@ function Sort({ value, onChangeSort, orderBy, setOrderBy }) {
   return (
     <div className="sort">
       <div className="sort__label">
-        <div onClick={onChangeOrderBy} className={`sort__label-order sort__label-order--${orderBy}`}>
+        <div onClick={onChangeOrder} className={`sort__label-order sort__label-order--${order}`}>
           <svg
             width="13"
             height="8"
@@ -33,7 +41,7 @@ function Sort({ value, onChangeSort, orderBy, setOrderBy }) {
           onMouseOver={() => setIsOpen(true)}
           onClick={() => setIsOpen(!isOpen)}
         >
-          {value.name}
+          {sort.name}
         </span>
       </div>
       {isOpen && (
@@ -46,7 +54,7 @@ function Sort({ value, onChangeSort, orderBy, setOrderBy }) {
                   setIsOpen(false);
                 }}
                 className={
-                  value.sortProperty === item.sortProperty ? "active" : ""
+                  sort.sortProperty === item.sortProperty ? "active" : ""
                 }
                 key={index}
               >
