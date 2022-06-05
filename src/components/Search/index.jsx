@@ -4,7 +4,17 @@ import { SearchContext } from "../../App";
 import styles from "./Search.module.scss";
 
 const Search = () => {
-  const {searchValue, setSearchValue } = React.useContext(SearchContext);
+  const { searchValue, setSearchValue } = React.useContext(SearchContext);
+  const inputRef = React.useRef();
+
+  const onClickClear = () => {
+    setSearchValue("");
+    // Firefox не поддерживает фокус в редакторе ввода
+    setTimeout(() => {
+      inputRef.current.focus();
+    }, 1);
+  };
+
   return (
     <div className={styles.root}>
       <svg
@@ -18,6 +28,7 @@ const Search = () => {
         />
       </svg>
       <input
+        ref={inputRef}
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
         className={styles.input}
@@ -26,7 +37,7 @@ const Search = () => {
       />
       {searchValue && (
         <svg
-          onClick={() => setSearchValue("")}
+          onClick={onClickClear}
           className={[styles.icon, styles.icon__clear].join(" ")}
           data-name="Layer 1"
           height="200"
