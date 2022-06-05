@@ -9,6 +9,7 @@ const initialState = {
   },
   order: "asc",
   search: "",
+  currentPage: 1,
 }
 
 export const filterSlice = createSlice({
@@ -26,10 +27,13 @@ export const filterSlice = createSlice({
     },
     setSearch: (state, action) => {
       state.search = action.payload
+    },
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
     }
   },
 })
 
-export const { setCategory, setSort, setOrder, setSearch } = filterSlice.actions;
+export const { setCategory, setSort, setOrder, setSearch, setCurrentPage } = filterSlice.actions;
 
 export default filterSlice.reducer;
