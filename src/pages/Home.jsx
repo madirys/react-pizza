@@ -1,8 +1,6 @@
 import React from "react";
 import axios from "axios";
 
-import { SearchContext } from "../App";
-
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
@@ -13,9 +11,8 @@ import { setCategory } from "../redux/slices/filterSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { category, sort, order } = useSelector((state) => state.filter);
+  const { category, sort, order, search } = useSelector((state) => state.filter);
 
-  const { searchValue } = React.useContext(SearchContext);
   const [isLoading, setIsLoading] = React.useState(true);
   const [items, setItems] = React.useState([]);
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -31,7 +28,7 @@ const Home = () => {
         `https://628e18f4368687f3e7104a3b.mockapi.io/items?page=${currentPage}&limit=4&${
           category.id > 0 ? `category=${category.id}&` : ""
         }sortBy=${sort.sortProperty}&order=${order}${
-          searchValue ? `&name=${searchValue}` : ""
+          search ? `&name=${search}` : ""
         }`
       )
       .then((res) => {
@@ -39,7 +36,7 @@ const Home = () => {
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [category, sort, order, searchValue, currentPage]);
+  }, [category, sort, order, search, currentPage]);
 
   const pizzas = items.map((item) => <PizzaBlock key={item.id} {...item} />);
   const skeletons = [...Array(4)].map((_, index) => <Skeleton key={index} />);

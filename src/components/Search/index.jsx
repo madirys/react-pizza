@@ -1,15 +1,33 @@
 import React from "react";
-import { SearchContext } from "../../App";
+import debounce from "lodash.debounce";
+import { useDispatch } from "react-redux";
+import { setSearch } from "../../redux/slices/filterSlice";
 
 import styles from "./Search.module.scss";
 
 const Search = () => {
-  const { searchValue, setSearchValue } = React.useContext(SearchContext);
+  const [value, setValue] = React.useState("");
+  const dispatch = useDispatch();
   const inputRef = React.useRef();
 
+  // return memorized callback function to avoid unnecessary rerenders
+  const updateSearchValue = React.useCallback(
+    debounce((str) => {
+      dispatch(setSearch(str))
+    }, 250),
+    []
+  );
+
+  const onChangeInput = (e) => {
+    setValue(e.target.value);
+    updateSearchValue(e.target.value);
+  };
+
   const onClickClear = () => {
-    setSearchValue("");
-    // Firefox не поддерживает фокус в редакторе ввода
+    dispatch(setSearch(""))
+    // setSearchValue("");
+    setValue("");
+    // Firefox doesn't focus without setTimeout
     setTimeout(() => {
       inputRef.current.focus();
     }, 1);
@@ -29,13 +47,13 @@ const Search = () => {
       </svg>
       <input
         ref={inputRef}
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
+        value={value}
+        onChange={onChangeInput}
         className={styles.input}
         type="text"
         placeholder="Поиск по названию"
       />
-      {searchValue && (
+      {value && (
         <svg
           onClick={onClickClear}
           className={[styles.icon, styles.icon__clear].join(" ")}
