@@ -10,23 +10,39 @@ export const sortList = [
 
 function Sort() {
   const dispatch = useDispatch();
-  const {sort, order} = useSelector((state) => state.filter);
+  const { sort, order } = useSelector((state) => state.filter);
+  const sortRef = React.useRef();
 
   const [isOpen, setIsOpen] = React.useState(false);
 
   const onChangeSort = (item) => {
     dispatch(setSort(item));
-  }
+  };
 
   const onChangeOrder = () => {
     const direction = order === "asc" ? "desc" : "asc";
     dispatch(setOrder(direction));
   };
 
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      const path = event.composedPath();
+      if (!path.includes(sortRef.current)) {
+        setIsOpen(false);
+      }
+    };
+    document.body.addEventListener("click", handleClickOutside);
+
+    return () => document.body.removeEventListener("click", handleClickOutside);
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
-        <div onClick={onChangeOrder} className={`sort__label-order sort__label-order--${order}`}>
+        <div
+          onClick={onChangeOrder}
+          className={`sort__label-order sort__label-order--${order}`}
+        >
           <svg
             width="13"
             height="8"
