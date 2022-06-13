@@ -26,6 +26,7 @@ export const filterSlice = createSlice({
     },
     setSearch: (state, action) => {
       state.search = action.payload;
+      state.currentPage = 1;
     },
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
