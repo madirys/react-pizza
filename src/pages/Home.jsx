@@ -4,6 +4,7 @@ import qs from "qs";
 import { useNavigate } from "react-router-dom";
 
 import Categories, { categoriesList } from "../components/Categories";
+import EmptyProducts from "../components/EmptyProducts";
 import Sort, { sortList } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
@@ -14,6 +15,7 @@ import {
   setCurrentPage,
   setFilters,
 } from "../redux/slices/filterSlice";
+import { fetchProducts } from "../redux/slices/productsSlice";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -24,9 +26,7 @@ const Home = () => {
   const { category, sort, order, search, currentPage } = useSelector(
     (state) => state.filter
   );
-
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [items, setItems] = React.useState([]);
+  const { items, status } = useSelector((state) => state.products);
 
   const onCahngeCategory = (category) => {
     dispatch(setCategory(category));
@@ -36,25 +36,20 @@ const Home = () => {
     dispatch(setCurrentPage(page));
   };
 
-  const fetchItems = async () => {
-    setIsLoading(true);
-    const api = "https://628e18f4368687f3e7104a3b.mockapi.io/items?page=";
-    try {
-      const res = await axios.get(
-        `${api}${currentPage}&limit=4&${
-          category.id > 0 ? `category=${category.id}&` : ""
-        }
-        sortBy=${sort.sortProperty}&order=${order}${
-          search ? `&name=${search}` : ""
-        }`
-      );
-      setItems(res.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
+  const getProducts = async () => {
+    const categoryId = `${category.id > 0 ? `category=${category.id}` : ""}`;
+    const { sortProperty } = sort;
+    const searchInput = `${search ? `&search=${search}` : ""}`;
 
+    dispatch(
+      fetchProducts({
+        currentPage,
+        categoryId,
+        sortProperty,
+        order,
+        searchInput,
+      })
+    );
   };
 
   // if first render then check url-params and save to redux
@@ -81,7 +76,7 @@ const Home = () => {
   React.useEffect(() => {
     window.scrollTo(0, 0);
     if (!isSearch.current) {
-      fetchItems();
+      getProducts();
     }
     isSearch.current = false;
   }, [category, sort, order, search, currentPage]);
@@ -101,7 +96,7 @@ const Home = () => {
     isMounted.current = true;
   }, [category, sort, order, currentPage]);
 
-  const pizzas = items.map((item) => <PizzaBlock key={item.id} {...item} />);
+  const products = items.map((item) => <PizzaBlock key={item.id} {...item} />);
   const skeletons = [...Array(4)].map((_, index) => <Skeleton key={index} />);
 
   return (
@@ -111,7 +106,13 @@ const Home = () => {
         <Sort />
       </div>
       <h2 className="content__title">{category.name}</h2>
-      <div className="content__items">{isLoading ? skeletons : pizzas}</div>
+      {status === "error" ? (
+        <EmptyProducts />
+      ) : (
+        <div className="content__items">
+          {status === "loading" ? skeletons : products}
+        </div>
+      )}
       <Pagination
         currentPage={currentPage}
         onPageChange={(number) => onChangeCurrentPage(number)}
