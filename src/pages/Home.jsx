@@ -36,20 +36,25 @@ const Home = () => {
     dispatch(setCurrentPage(page));
   };
 
-  const fetchItems = () => {
+  const fetchItems = async () => {
     setIsLoading(true);
-    axios
-      .get(
-        `https://628e18f4368687f3e7104a3b.mockapi.io/items?page=${currentPage}&limit=4&${
+    const api = "https://628e18f4368687f3e7104a3b.mockapi.io/items?page=";
+    try {
+      const res = await axios.get(
+        `${api}${currentPage}&limit=4&${
           category.id > 0 ? `category=${category.id}&` : ""
-        }sortBy=${sort.sortProperty}&order=${order}${
+        }
+        sortBy=${sort.sortProperty}&order=${order}${
           search ? `&name=${search}` : ""
         }`
-      )
-      .then((res) => {
-        setItems(res.data);
-        setIsLoading(false);
-      });
+      );
+      setItems(res.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+
   };
 
   // if first render then check url-params and save to redux
