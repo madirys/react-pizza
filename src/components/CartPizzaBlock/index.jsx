@@ -5,8 +5,11 @@ import { removeItems, addItem, removeOneItem } from '../../redux/slices/cartSlic
 function CartPizzaBlock({ idc, name, price, imageUrl, size, type, quantity }) {
   const dispatch = useDispatch();
   const typeNames = ["тонкое", "традиционное"];
+
   const onClickRemoveItems = () => {
-    dispatch(removeItems({ idc, price, quantity }));
+    if (window.confirm('Вы действительно хотите убрать эту позицию из корзины?')) {
+      dispatch(removeItems({ idc, price, quantity }));
+    }
   }
   const onClickAddItem = () => {
     dispatch(addItem({ idc, price }))
