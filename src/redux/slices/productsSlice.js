@@ -12,7 +12,7 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async (p
 
 const initialState = {
   items: [],
-  status: 'loading'
+  status: 'loading' // loading, success, error
 }
 
 export const producsSlice = createSlice({
