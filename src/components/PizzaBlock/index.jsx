@@ -2,6 +2,7 @@ import React from "react";
 import { addItem } from "../../redux/slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { cartSelectorById } from "../../redux/slices/cartSlice";
+import { Link } from "react-router-dom";
 
 function PizzaBlock({ id, name, price, imageUrl, sizes, types }) {
   const dispatch = useDispatch();
@@ -10,7 +11,9 @@ function PizzaBlock({ id, name, price, imageUrl, sizes, types }) {
   const [activeSize, setActiveSize] = React.useState(0);
   const typeNames = ["тонкое", "традиционное"];
 
-  const quantity = addedItem ? addedItem.reduce((acc, item) => acc + item.quantity, 0) : 0;
+  const quantity = addedItem
+    ? addedItem.reduce((acc, item) => acc + item.quantity, 0)
+    : 0;
 
   const onClickAddItem = () => {
     const item = {
@@ -24,13 +27,15 @@ function PizzaBlock({ id, name, price, imageUrl, sizes, types }) {
       quantity: 1,
     };
     dispatch(addItem(item));
-  }
+  };
 
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
-        <h4 className="pizza-block__title">{name}</h4>
+        <Link to={`/product/${id}`}>
+          <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+          <h4 className="pizza-block__title">{name}</h4>
+        </Link>
         <div className="pizza-block__selector">
           <ul>
             {types.map((index) => (
@@ -57,7 +62,10 @@ function PizzaBlock({ id, name, price, imageUrl, sizes, types }) {
         </div>
         <div className="pizza-block__bottom">
           <div className="pizza-block__price">от {price} ₸</div>
-          <button onClick={onClickAddItem} className="button button--outline button--add">
+          <button
+            onClick={onClickAddItem}
+            className="button button--outline button--add"
+          >
             <svg
               width="12"
               height="12"
