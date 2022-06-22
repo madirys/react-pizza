@@ -8,20 +8,18 @@ import NotFound from './pages/NotFound';
 
 import './scss/app.scss';
 import FullProduct from './pages/FullProduct';
+import DefaultLayout from './layouts/DefaultLayout';
 
 function App() {
   return (
-    <div className="wrapper">
-      <Header />
-      <div className="content">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/product/:id" element={<FullProduct />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<DefaultLayout />}>
+        <Route path="" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/product/:id" element={<FullProduct />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 }
 
