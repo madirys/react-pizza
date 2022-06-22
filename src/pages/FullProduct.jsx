@@ -1,10 +1,11 @@
 import axios from "axios";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const FullProduct = () => {
   const [product, setProducct] = React.useState({});
   const { id } = useParams();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     async function fetchProduct(params) {
@@ -14,7 +15,7 @@ const FullProduct = () => {
         );
         setProducct(data);
       } catch (error) {
-        console.log(error);
+        navigate('/not-found');
       }
     }
     fetchProduct();

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import styles from "./NotFoundBlock.module.scss";
 
@@ -14,6 +15,14 @@ const NotFoundBlock = () => {
         <p className={styles.description}>
           К сожалению, данная страница отсутсвует.
         </p>
+        <div className={styles.goBack}>
+          <Link
+            to="/"
+            className="button button--outline button--add go-back-btn"
+          >
+            <span>Вернуться на главную</span>
+          </Link>
+        </div>
       </div>
     </div>
   );
