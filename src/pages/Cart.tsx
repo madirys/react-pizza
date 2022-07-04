@@ -6,11 +6,11 @@ import CartPizzaBlock from "../components/CartPizzaBlock";
 import CartEmpty from "../components/CartEmpty";
 import { cartSelector } from "../redux/slices/cartSlice";
 
-const Cart = () => {
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const { items, totalPrice } = useSelector(cartSelector);
 
-  const quantity = items.reduce((acc, item) => acc + item.quantity, 0);
+  const quantity = items.reduce((acc: number, item: any) => acc + item.quantity, 0);
 
   const onClickClearCart = () => {
     if (window.confirm("Вы действительно хотите очистить всю корзину?")) {
@@ -100,7 +100,7 @@ const Cart = () => {
           </div>
         </div>
         <div className="content__items">
-          {items.map((item) => (
+          {items.map((item: any) => (
             <CartPizzaBlock key={item.idc} {...item} />
           ))}
         </div>

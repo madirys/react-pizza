@@ -5,10 +5,10 @@ import { setSearch } from "../../redux/slices/filterSlice";
 
 import styles from "./Search.module.scss";
 
-const Search = () => {
+const Search: React.FC = () => {
   const [value, setValue] = React.useState("");
   const dispatch = useDispatch();
-  const inputRef = React.useRef();
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   // return memorized callback function to avoid unnecessary rerenders
   const updateSearchValue = React.useMemo(
@@ -16,7 +16,7 @@ const Search = () => {
     [dispatch]
   );
 
-  const onChangeInput = (e) => {
+  const onChangeInput = (e: any) => {
     setValue(e.target.value);
     updateSearchValue(e.target.value);
   };
@@ -26,7 +26,7 @@ const Search = () => {
     setValue("");
     // Fix for Firefox
     setTimeout(() => {
-      inputRef.current.focus();
+      inputRef.current?.focus();
     }, 1);
   };
 

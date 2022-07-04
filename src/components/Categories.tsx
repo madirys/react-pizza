@@ -1,5 +1,15 @@
 import React from "react";
 
+export type TCategory = {
+  id: number;
+  name: string;
+}
+
+type TCategoryProps = {
+  value: TCategory;
+  onCahngeCategory: (category: TCategory) => void;
+}
+
 export const categoriesList = [
   { id: 0, name: "Все" },
   { id: 1, name: "Мясные" },
@@ -9,7 +19,7 @@ export const categoriesList = [
   { id: 5, name: "Закрытые" },
 ];
 
-function  Categories({ value, onCahngeCategory }) {
+const Categories: React.FC<TCategoryProps> = ({ value, onCahngeCategory }) => {
 
   return (
     <div className="categories">

@@ -2,7 +2,7 @@ import React from "react";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 
-import Categories, { categoriesList } from "../components/Categories";
+import Categories, { categoriesList, TCategory } from "../components/Categories";
 import EmptyProducts from "../components/EmptyProducts";
 import Sort, { sortList } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
@@ -16,22 +16,22 @@ import {
 } from "../redux/slices/filterSlice";
 import { fetchProducts } from "../redux/slices/productsSlice";
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
   const { category, sort, order, search, currentPage } = useSelector(
-    (state) => state.filter
+    (state: any) => state.filter
   );
-  const { items, status } = useSelector((state) => state.products);
+  const { items, status } = useSelector((state: any) => state.products);
 
-  const onCahngeCategory = (category) => {
+  const onCahngeCategory = (category: TCategory) => {
     dispatch(setCategory(category));
   };
 
-  const onChangeCurrentPage = (page) => {
+  const onChangeCurrentPage = (page: number) => {
     dispatch(setCurrentPage(page));
   };
 
@@ -41,6 +41,7 @@ const Home = () => {
     const searchInput = `${search ? `&search=${search}` : ""}`;
 
     dispatch(
+      // @ts-ignore
       fetchProducts({
         currentPage,
         categoryId,
@@ -95,7 +96,7 @@ const Home = () => {
     isMounted.current = true;
   }, [category, sort, order, currentPage]);
 
-  const products = items.map((item) => <PizzaBlock key={item.id} {...item} />);
+  const products = items.map((item: any) => <PizzaBlock key={item.id} {...item} />);
   const skeletons = [...Array(4)].map((_, index) => <Skeleton key={index} />);
 
   return (

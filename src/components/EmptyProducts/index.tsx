@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./EmptyProducts.module.scss";
 
-const EmptyProducts = () => {
+const EmptyProducts: React.FC = () => {
   return (
     <div className={styles.root}>
       <h1>

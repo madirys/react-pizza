@@ -4,7 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartSelectorById } from "../../redux/slices/cartSlice";
 import { Link } from "react-router-dom";
 
-function PizzaBlock({ id, name, price, imageUrl, sizes, types }) {
+type TProps = {
+  id: number;
+  name: string;
+  price: number;
+  imageUrl: string;
+  sizes: string[];
+  types: string[];
+  quantity: number;
+}
+
+const PizzaBlock: React.FC<TProps> = ({ id, name, price, imageUrl, sizes, types }) => {
   const dispatch = useDispatch();
   const addedItem = useSelector(cartSelectorById(id));
   const [activeType, setActiveType] = React.useState(types[0]);
@@ -12,7 +22,7 @@ function PizzaBlock({ id, name, price, imageUrl, sizes, types }) {
   const typeNames = ["тонкое", "традиционное"];
 
   const quantity = addedItem
-    ? addedItem.reduce((acc, item) => acc + item.quantity, 0)
+    ? addedItem.reduce((acc: number, item: TProps) => acc + item.quantity, 0)
     : 0;
 
   const onClickAddItem = () => {
@@ -38,7 +48,7 @@ function PizzaBlock({ id, name, price, imageUrl, sizes, types }) {
         </Link>
         <div className="pizza-block__selector">
           <ul>
-            {types.map((index) => (
+            {types.map((index: any) => (
               <li
                 onClick={() => setActiveType(index)}
                 className={activeType === index ? "active" : ""}

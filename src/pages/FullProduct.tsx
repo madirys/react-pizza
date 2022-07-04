@@ -2,13 +2,20 @@ import axios from "axios";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-const FullProduct = () => {
-  const [product, setProducct] = React.useState({});
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+  imageUrl: string
+}
+
+const FullProduct: React.FC = () => {
+  const [product, setProducct] = React.useState<Product>();
   const { id } = useParams();
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    async function fetchProduct(params) {
+    async function fetchProduct() {
       try {
         const { data } = await axios(
           "https://628e18f4368687f3e7104a3b.mockapi.io/items/" + id
@@ -19,7 +26,11 @@ const FullProduct = () => {
       }
     }
     fetchProduct();
-  }, []);
+  }, [id, navigate]);
+
+  if (!product) {
+    return <>Загрузка...</>
+  }
 
   return (
     <div className="container">

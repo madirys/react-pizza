@@ -2,7 +2,17 @@ import React from 'react'
 import { useDispatch } from 'react-redux';
 import { removeItems, addItem, removeOneItem } from '../../redux/slices/cartSlice';
 
-function CartPizzaBlock({ idc, name, price, imageUrl, size, type, quantity }) {
+type TCartItem = {
+  idc: number;
+  name: string;
+  price: number;
+  imageUrl: string;
+  size: number;
+  type: number;
+  quantity: number;
+}
+
+const CartPizzaBlock: React.FC<TCartItem> = ({ idc, name, price, imageUrl, size, type, quantity }) =>{
   const dispatch = useDispatch();
   const typeNames = ["тонкое", "традиционное"];
 
