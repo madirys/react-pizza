@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setSort, setOrder, SortName, SortProperty } from "../redux/slices/filterSlice";
 import { TSort } from "../redux/slices/filterSlice";
 
@@ -9,9 +9,13 @@ export const sortList: TSort[] = [
   { name: SortName.TITLE, sortProperty: SortProperty.TITLE },
 ];
 
-const Sort: React.FC = () => {
+type TSortProps = {
+  sort: TSort;
+  order: string;
+}
+
+const Sort: React.FC<TSortProps> = React.memo(({ sort, order }) => {
   const dispatch = useDispatch();
-  const { sort, order } = useSelector((state: any) => state.filter);
   const sortRef = React.useRef<HTMLDivElement>(null);
 
   const [isOpen, setIsOpen] = React.useState(false);
@@ -82,6 +86,6 @@ const Sort: React.FC = () => {
       )}
     </div>
   );
-}
+})
 
 export default Sort;

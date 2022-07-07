@@ -110,7 +110,7 @@ const Home: React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories value={category} onCahngeCategory={onCahngeCategory} />
-        <Sort />
+        <Sort sort={sort} order={order} />
       </div>
       <h2 className="content__title">{category.name}</h2>
       {status === "error" ? (
