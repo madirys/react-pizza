@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { removeItems, addItem, removeOneItem, TCartProduct } from '../../redux/slices/cartSlice';
 
 const CartPizzaBlock: React.FC<TCartProduct> = (product) => {
-  const { idc, name, price, imageUrl, size, type, quantity } = product;
+  const { name, price, imageUrl, size, type, quantity } = product;
   const dispatch = useDispatch();
   const typeNames = ["тонкое", "традиционное"];
 
@@ -36,7 +36,11 @@ const CartPizzaBlock: React.FC<TCartProduct> = (product) => {
         <p>{typeNames[type as any]} тесто, {size} см.</p>
       </div>
       <div className="cart__item-count">
-        <div onClick={onClickRemoveOneItem} className="button button--outline button--circle cart__item-count-minus">
+        <button
+          disabled={quantity === 1}
+          onClick={onClickRemoveOneItem}
+          className="button button--outline button--circle cart__item-count-minus"
+        >
           <svg
             width="10"
             height="10"
@@ -53,7 +57,7 @@ const CartPizzaBlock: React.FC<TCartProduct> = (product) => {
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
         <b>{quantity}</b>
         <div onClick={onClickAddItem} className="button button--outline button--circle cart__item-count-plus">
           <svg
