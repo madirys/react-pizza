@@ -2,23 +2,25 @@ import React from "react";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 
-import Categories, { categoriesList, TCategory } from "../components/Categories";
+import Categories, { categoriesList } from "../components/Categories";
 import EmptyProducts from "../components/EmptyProducts";
 import Sort, { sortList } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   setCategory,
   setCurrentPage,
   setFilters,
+  TCategory,
 } from "../redux/slices/filterSlice";
 import { fetchProducts } from "../redux/slices/productsSlice";
+import { useAppDispatch } from "../redux/store";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
@@ -41,7 +43,6 @@ const Home: React.FC = () => {
     const searchInput = `${search ? `&search=${search}` : ""}`;
 
     dispatch(
-      // @ts-ignore
       fetchProducts({
         currentPage,
         categoryId,
@@ -58,15 +59,20 @@ const Home: React.FC = () => {
       const query = qs.parse(window.location.search.substring(1));
       const sort = sortList.find(
         (item) => item.sortProperty === query.sortProperty
-      );
-      const category = categoriesList.find(
+      )!;
+      const category: TCategory = categoriesList.find(
         (item) => item.id === Number(query.categoryId)
-      );
+      )!;
+      const order = query.order as string;
+      const search = query.search as string;
+      const currentPage = Number(query.page);
       dispatch(
         setFilters({
           category,
           sort,
-          ...query,
+          order,
+          search,
+          currentPage,
         })
       );
       isSearch.current = true;

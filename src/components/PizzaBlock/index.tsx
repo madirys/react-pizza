@@ -1,20 +1,11 @@
 import React from "react";
-import { addItem } from "../../redux/slices/cartSlice";
+import { addItem, TCartProduct } from "../../redux/slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { cartSelectorById } from "../../redux/slices/cartSlice";
 import { Link } from "react-router-dom";
+import { TProduct } from "../../redux/slices/productsSlice";
 
-type TProps = {
-  id: number;
-  name: string;
-  price: number;
-  imageUrl: string;
-  sizes: string[];
-  types: string[];
-  quantity: number;
-}
-
-const PizzaBlock: React.FC<TProps> = ({ id, name, price, imageUrl, sizes, types }) => {
+const PizzaBlock: React.FC<TProduct> = ({ id, name, price, imageUrl, sizes, types }) => {
   const dispatch = useDispatch();
   const addedItem = useSelector(cartSelectorById(id));
   const [activeType, setActiveType] = React.useState(types[0]);
@@ -22,11 +13,11 @@ const PizzaBlock: React.FC<TProps> = ({ id, name, price, imageUrl, sizes, types 
   const typeNames = ["тонкое", "традиционное"];
 
   const quantity = addedItem
-    ? addedItem.reduce((acc: number, item: TProps) => acc + item.quantity, 0)
+    ? addedItem.reduce((acc: number, item: TCartProduct) => acc + item.quantity, 0)
     : 0;
 
   const onClickAddItem = () => {
-    const item = {
+    const item: TCartProduct = {
       idc: Number(`${sizes[activeSize]}${id}${activeType}`),
       id: id,
       name,

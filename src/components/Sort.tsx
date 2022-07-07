@@ -1,16 +1,12 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setSort, setOrder } from "../redux/slices/filterSlice";
+import { setSort, setOrder, SortName, SortProperty } from "../redux/slices/filterSlice";
+import { TSort } from "../redux/slices/filterSlice";
 
-type TSortProps = {
-  name: string,
-  sortProperty: string,
-};
-
-export const sortList: TSortProps[] = [
-  { name: "популярности", sortProperty: "rating" },
-  { name: "цене", sortProperty: "price" },
-  { name: "алфавиту", sortProperty: "title" },
+export const sortList: TSort[] = [
+  { name: SortName.RATING, sortProperty: SortProperty.RATING },
+  { name: SortName.PRICE, sortProperty: SortProperty.PRICE },
+  { name: SortName.TITLE, sortProperty: SortProperty.TITLE },
 ];
 
 const Sort: React.FC = () => {
@@ -20,7 +16,7 @@ const Sort: React.FC = () => {
 
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const onChangeSort = (item: TSortProps) => {
+  const onChangeSort = (item: TSort) => {
     dispatch(setSort(item));
   };
 

@@ -1,9 +1,5 @@
 import React from "react";
-
-export type TCategory = {
-  id: number;
-  name: string;
-}
+import { TCategory } from "../redux/slices/filterSlice";
 
 type TCategoryProps = {
   value: TCategory;
