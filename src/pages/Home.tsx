@@ -41,6 +41,7 @@ const Home: React.FC = () => {
     const categoryId = `${category.id > 0 ? `category=${category.id}` : ""}`;
     const { sortProperty } = sort;
     const searchInput = `${search ? `&search=${search}` : ""}`;
+    
 
     dispatch(
       fetchProducts({
@@ -65,7 +66,7 @@ const Home: React.FC = () => {
       )!;
       const order = query.order as string;
       const search = query.search as string;
-      const currentPage = Number(query.page);
+      const currentPage = Number(query.currentPage);
       dispatch(
         setFilters({
           category,
