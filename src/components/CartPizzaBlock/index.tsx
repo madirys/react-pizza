@@ -2,21 +2,24 @@ import React from 'react'
 import { useDispatch } from 'react-redux';
 import { removeItems, addItem, removeOneItem, TCartProduct } from '../../redux/slices/cartSlice';
 
-const CartPizzaBlock: React.FC<TCartProduct> = ({ idc, name, price, imageUrl, size, type, quantity }) => {
+const CartPizzaBlock: React.FC<TCartProduct> = (product) => {
+  const { idc, name, price, imageUrl, size, type, quantity } = product;
   const dispatch = useDispatch();
   const typeNames = ["тонкое", "традиционное"];
 
   const onClickRemoveItems = () => {
     if (window.confirm('Вы действительно хотите убрать эту позицию из корзины?')) {
-      dispatch(removeItems({ idc } as TCartProduct));
+      dispatch(removeItems(product));
     }
   }
   const onClickAddItem = () => {
-    dispatch(addItem({ idc, price } as TCartProduct))
+    dispatch(addItem(product));
   }
 
   const onClickRemoveOneItem = () => {
-    dispatch(removeOneItem({ idc, price, quantity } as TCartProduct))
+    if (quantity > 1) {
+      dispatch(removeOneItem(product));
+    }
   }
 
   return (
