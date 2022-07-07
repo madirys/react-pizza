@@ -33,9 +33,9 @@ const Home: React.FC = () => {
     dispatch(setCategory(category));
   }, []);
 
-  const onChangeCurrentPage = (page: number) => {
+  const onChangeCurrentPage = React.useCallback((page: number) => {
     dispatch(setCurrentPage(page));
-  };
+  }, []);
 
   const getProducts = async () => {
     const categoryId = `${category.id > 0 ? `category=${category.id}` : ""}`;
