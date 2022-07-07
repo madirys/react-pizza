@@ -29,9 +29,9 @@ const Home: React.FC = () => {
   );
   const { items, status } = useSelector((state: any) => state.products);
 
-  const onCahngeCategory = (category: TCategory) => {
+  const onCahngeCategory = React.useCallback((category: TCategory) => {
     dispatch(setCategory(category));
-  };
+  }, []);
 
   const onChangeCurrentPage = (page: number) => {
     dispatch(setCurrentPage(page));

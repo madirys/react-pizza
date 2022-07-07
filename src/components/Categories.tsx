@@ -15,8 +15,7 @@ export const categoriesList = [
   { id: 5, name: "Закрытые" },
 ];
 
-const Categories: React.FC<TCategoryProps> = ({ value, onCahngeCategory }) => {
-
+const Categories: React.FC<TCategoryProps> = React.memo(({ value, onCahngeCategory }) => {
   return (
     <div className="categories">
       <ul>
@@ -32,6 +31,6 @@ const Categories: React.FC<TCategoryProps> = ({ value, onCahngeCategory }) => {
       </ul>
     </div>
   );
-}
+})
 
 export default Categories;
