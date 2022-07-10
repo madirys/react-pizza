@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./EmptyProducts.module.scss";
 
-const EmptyProducts: React.FC = () => {
+export const EmptyProducts: React.FC = () => {
   return (
     <div className={styles.root}>
       <h1>
@@ -16,5 +16,3 @@ const EmptyProducts: React.FC = () => {
     </div>
   );
 };
-
-export default EmptyProducts;

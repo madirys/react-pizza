@@ -1,12 +1,12 @@
 import React from "react"
 import { Link, useLocation } from "react-router-dom";
-import Search from "./Search";
+import { Search } from "./";
 import { useSelector } from "react-redux";
 import { cartSelector } from "../redux/slices/cartSlice";
 
 import Logo from "../assets/img/pizza-logo.svg"
 
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(cartSelector);
   const quantity = items.reduce((acc: number, item: any) => acc + item.quantity, 0);
   const { pathname } = useLocation();
@@ -66,5 +66,3 @@ const Header: React.FC = () => {
     </div>
   );
 }
-
-export default Header;

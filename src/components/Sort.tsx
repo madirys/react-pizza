@@ -14,7 +14,7 @@ type TSortProps = {
   order: string;
 }
 
-const Sort: React.FC<TSortProps> = React.memo(({ sort, order }) => {
+export const Sort: React.FC<TSortProps> = React.memo(({ sort, order }) => {
   const dispatch = useDispatch();
   const sortRef = React.useRef<HTMLDivElement>(null);
 
@@ -86,6 +86,4 @@ const Sort: React.FC<TSortProps> = React.memo(({ sort, order }) => {
       )}
     </div>
   );
-})
-
-export default Sort;
+});

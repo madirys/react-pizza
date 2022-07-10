@@ -8,7 +8,7 @@ type TProps = {
   onPageChange: (page: number) => void;
 }
 
-const Pagination: React.FC<TProps> = React.memo(({currentPage, onPageChange}) => {  
+export const Pagination: React.FC<TProps> = React.memo(({currentPage, onPageChange}) => {  
   return (
       <ReactPaginate
         className={styles.root}
@@ -22,5 +22,3 @@ const Pagination: React.FC<TProps> = React.memo(({currentPage, onPageChange}) =>
       />
   );
 });
-
-export default Pagination;

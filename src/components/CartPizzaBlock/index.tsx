@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux';
 import { removeItems, addItem, removeOneItem, TCartProduct } from '../../redux/slices/cartSlice';
 
-const CartPizzaBlock: React.FC<TCartProduct> = (product) => {
+export const CartPizzaBlock: React.FC<TCartProduct> = (product) => {
   const { name, price, imageUrl, size, type, quantity } = product;
   const dispatch = useDispatch();
   const typeNames = ["тонкое", "традиционное"];
@@ -104,5 +104,3 @@ const CartPizzaBlock: React.FC<TCartProduct> = (product) => {
     </div>
   )
 }
-
-export default CartPizzaBlock

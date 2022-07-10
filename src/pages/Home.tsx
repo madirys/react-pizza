@@ -2,12 +2,15 @@ import React from "react";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 
-import Categories, { categoriesList } from "../components/Categories";
-import EmptyProducts from "../components/EmptyProducts";
-import Sort, { sortList } from "../components/Sort";
-import PizzaBlock from "../components/PizzaBlock";
-import Skeleton from "../components/PizzaBlock/Skeleton";
-import Pagination from "../components/Pagination";
+import {
+  Categories, categoriesList,
+  EmptyProducts,
+  Sort,
+  sortList,
+  PizzaBlock,
+  Skeleton,
+  Pagination
+} from "../components";
 import { useSelector } from "react-redux";
 import {
   setCategory,
@@ -41,7 +44,7 @@ const Home: React.FC = () => {
     const categoryId = `${category.id > 0 ? `category=${category.id}` : ""}`;
     const { sortProperty } = sort;
     const searchInput = `${search ? `&search=${search}` : ""}`;
-    
+
 
     dispatch(
       fetchProducts({

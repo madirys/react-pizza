@@ -5,7 +5,7 @@ import { cartSelectorById } from "../../redux/slices/cartSlice";
 import { Link } from "react-router-dom";
 import { TProduct } from "../../redux/slices/productsSlice";
 
-const PizzaBlock: React.FC<TProduct> = ({ id, name, price, imageUrl, sizes, types }) => {
+export const PizzaBlock: React.FC<TProduct> = ({ id, name, price, imageUrl, sizes, types }) => {
   const dispatch = useDispatch();
   const addedItem = useSelector(cartSelectorById(id));
   const [activeType, setActiveType] = React.useState(types[0]);
@@ -87,5 +87,3 @@ const PizzaBlock: React.FC<TProduct> = ({ id, name, price, imageUrl, sizes, type
     </div>
   );
 }
-
-export default PizzaBlock;
